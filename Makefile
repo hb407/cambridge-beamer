@@ -1,5 +1,5 @@
 # Specify source tex files here
-TEX_SRCS=examples/beamerexample-conference-talk.tex
+TEX_SRCS=HoloHF/20161205_Holo_HF_Into.tex
 
 # The following variables may be overridden on the make command line in
 PERL := perl

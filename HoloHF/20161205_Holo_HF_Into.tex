@@ -1,0 +1,260 @@
+\documentclass{beamer}
+
+\usetheme{cambridge}
+
+% Standard packages
+
+\usepackage[english]{babel}
+\usepackage[version=4]{mhchem}
+%\usepackage{times}
+%\usepackage[T1]{fontenc}
+
+%\usepackage{fontspec}
+%\setsansfont{Myriad Pro}
+%\usefonttheme{professionalfonts}
+
+% Setup TikZ
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+%define a few extra symbols
+\tikzstyle{block}=[draw opacity=0.7,line width=1.4cm]
+\def \hatH {{\skew4\hat{H}}}
+\def \hatA {{\skew6\hat{\cal A}}}
+\newcommand{\ah}[2] {\skew2\hat{a}_{\vphantom{b}#1}^{#2}}
+\newcommand{\ab}[1] {\skew2\hat{a}_{\vphantom{b}\bf #1}}
+\def\hatT{\skew3\hat{T}}
+\def\hatC {\skew4\hat{C}}
+\def \degrees {$^\circ$}
+% These are for non-serif fonts
+%\def \hatH {{\skew5\hat{H}}}
+%\def \hatA {{\skew5\hat{\cal A}}}
+%\newcommand{\ah}[2] {\skew3\hat{a}_{#1}^{#2}}
+%\newcommand{\ab}[1] {\skew3\hat{a}_{\bf #1}}
+%\def\hatT{\skew4\hat{T}}
+\newcommand{\dbd}[2] {{\frac{\partial #1}{\partial #2}}}
+\newcommand{\braket}[3] {{\langle #1 | #2 | #3 \rangle}}
+\newcommand{\brakett}[3] {{\{ #1 | #2 | #3 \}}}
+\newcommand{\brket}[2] {{\langle #1 | #2  \rangle}}
+\newcommand{\brkett}[2] {{\{ #1 | #2  \}}}
+\newcommand{\bket}[1] {{\langle #1  \rangle}}
+\newcommand{\D}[1] {D_{\bf #1}}
+\newcommand{\ket}[1] {{| #1 \rangle}}
+\newcommand{\kD}[1] {\ket{\D{#1}}}
+\def\kDz{\ket{D_0}}
+\def\bfr{{\bf r}}
+\newcommand{\Or}[1] {${\cal O}$[#1]}
+\def\PsiCC{\Psi_{\rm CC}}
+\def\PsiCI{\Psi_{\rm CI}}
+\newcommand{\up}[2] {{^{#1}\!#2}}
+
+
+% Author, Title, etc.
+
+\title[Holomorphic Hartree--Fock Theory]
+{%
+  Holomorphic Hartree--Fock Theory
+}
+\subtitle{An Introduction}
+
+\author[Burton, Thom]
+{
+  \hskip-1.7mm
+  Hugh~Burton \and
+  Alex~Thom \and
+}
+
+\institute[Burton and others]
+{
+%  \inst{1}%
+  University of Cambridge
+%  \and
+%  \vskip-2mm
+%  \inst{2}%
+%  Bar-Ilan University, Ramat-Gan, Israel
+}
+
+\date[P2P 2016]
+{Peer-to-Peer Presentations, Michaelmas 2016}
+
+% The main document
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+
+\section{Introduction}
+
+\subsection{Self--Consistent Field Method}
+
+\begin{frame}{Self--Consistent Field Method}
+%introduction to SCF method and wavefunction based chem
+%include HF energy functional etc
+\begin{itemize}
+\item<1-> Electrons in molecule described by single Slater determinant $\ket{\Psi}$.
+
+\item<2-> Single Slater determinant $\ket{\Psi}$ is made up of spin orbitals $\chi_i$, $i=1\dots N$.
+
+$$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
+\frac{1}{\sqrt{N!}}
+\left|
+   \begin{matrix} \chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) & \cdots & \chi_N(\mathbf{x}_1) \\
+                      \chi_1(\mathbf{x}_2) & \chi_2(\mathbf{x}_2) & \cdots & \chi_N(\mathbf{x}_2) \\
+                      \vdots & \vdots & \ddots & \vdots \\
+                      \chi_1(\mathbf{x}_N) & \chi_2(\mathbf{x}_N) & \cdots & \chi_N(\mathbf{x}_N)
+   \end{matrix} \right|$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Self--Consistent Field Method}
+ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
+ \frac{1}{\sqrt{N!}} \left|
+   \begin{matrix} \chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) & \cdots & \chi_N(\mathbf{x}_1) \\
+                      \chi_1(\mathbf{x}_2) & \chi_2(\mathbf{x}_2) & \cdots & \chi_N(\mathbf{x}_2) \\
+                      \vdots & \vdots & \ddots & \vdots \\
+                      \chi_1(\mathbf{x}_N) & \chi_2(\mathbf{x}_N) & \cdots & \chi_N(\mathbf{x}_N)
+   \end{matrix} \right|$$
+ \begin{itemize}
+  \item<1-> Spin orbitals are product of a spatial function and one of two spin functions, e.g. $\chi_i(\mathbf{r}) = \phi_i(\mathbf{r}) \ket{\alpha}$.
+
+  \item<2-> Orthonormal spatial orbitals are expressed in a chosen basis (e.g. atomic orbitals),
+  $$\phi_i(\mathbf{r})=\sum_\mu^M\chi_\mu(\mathbf{r}) C_{\mu i}.$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Self--Consistent Field Method}
+ \begin{itemize}
+  \item<1-> Take an initial guess for the orbital coefficients $C_{\mu i}$.
+  \item<2-> Form density matrix $P_{\mu\nu}=\sum_i^N C_{\mu i} (C_{\nu i})^{*}$.
+  \item<3-> Compute energy as a functional of density $E(P_{\mu\nu})$.
+  \item<3-> e.g. Hartree-Fock: 
+  $$E(P_{\mu\nu}) = h_{nuc} + \sum_{\mu\nu}^N h_{\mu\nu} P_{\mu\nu} + \frac{1}{2} \sum_{\mu\nu\sigma\tau}^N P_{\mu\nu} P_{\sigma\tau} \left(2\left(\mu\nu|\sigma\tau\right) - \left(\mu\tau|\sigma\nu\right)\right)$$
+  $h_{\mu\nu}=\braket{\chi_\mu}{\hat{h}}{\chi_\nu}$, $\left(\mu\nu|\sigma\tau\right)=\int\int\frac{\chi_\mu^*(\bfr_1)\chi^*_\sigma(\bfr_2)\chi_\nu(\bfr_1)\chi_\tau(\bfr_2)}{|\bfr_1-\bfr_2|}d^3\bfr_1d^3\bfr_2$
+  \item<4-> Solve for $\dbd{E}{P_{\mu\nu}}=0$ (keeping number of electrons fixed).
+ \end{itemize}
+\end{frame}
+
+\subsection{SCF Solutions to \ce{H2} STO-3G}
+\begin{frame}{SCF Solutions to \ce{H2}}
+ \vspace{-1em}
+ \begin{center}
+  \includegraphics<1->[scale=0.4]{HoloHF/H2_4basis}
+ \end{center}
+\end{frame}
+
+
+\begin{frame}{SCF Solutions to \ce{H2}}
+%introduce UHF solutions and advantages/disadvantages
+\end{frame}
+
+\section{Electron Correlation}
+\begin{frame}{Configuration Interaction}
+ \uncover<1->{Full Configuration Interaction:}
+  \begin{itemize}
+   \item<2->{Wave function is constructed as a linear combination of Slater determinants}
+             $$\ket{\Psi_0^{\mathrm{FCI}}} = \sum_i C_i \ket{D_i}$$
+   \item<3->{Coefficients $C_i$ are determined by variational optimization of $\left< E \right>$.}
+   \item<4->{Slater determinants are formed from excitations out of Hartree--Fock reference.}
+   \item<5->{Gives exact wave function for a given basis but scales as $N!$ or $N^N$.}
+  \end{itemize}
+%\end{frame}
+
+%\begin{frame}{Configuration Interaction}
+ \uncover<6->{Truncated Configuration Interaction:}
+  \begin{itemize}
+   \item<7->{Only include excited determinants up to a given excitation level, e.g. CISD includes only singles and doubles.}
+   \item<8->{It is \alert{not size--extensive}.}
+  \end{itemize}
+\end{frame}
+ 
+\subsection{Non--orthogonal Configuration Interaction}
+\begin{frame}{Non--orthogonal Configuration Interaction}
+ \uncover<1->{SCF states are size--extensive and could be used as a basis for CI methods to produce size--extensive energies.}
+ \begin{itemize}
+  \item<2-> But different SCF solutions ($\up{x}{\Psi}$ and $\up{y}{\Psi}$) are \alert{not orthogonal}.
+  \item<3-> We must solve the generalized eigenvalue problem ${\bf H v}=E{\bf S v}$ instead.
+  \item<4-> Hamilton matrix elements are given by $H_{xy}=\braket{\up{x}\Psi}{\hat H}{\up y\Psi}$.
+  \item<5-> Overlap matrix elements are given by $S_{xy}=\brket{\up{x}\Psi}{\up y\Psi}$.
+ \end{itemize}
+\vspace{1em}
+ \uncover<6->{But the number of SCF solutions \alert{is not constant} across all geometries!}
+\vfill
+\vspace{2em}
+\uncover<3->{\tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
+\end{frame}
+
+\subsection{Holomorphic Hartree--Fock Theory}
+\begin{frame}{Holomorphic Hartree--Fock Theory}
+ \uncover<1->{Fundamental Theorem of Algebra:}
+ \uncover<1->{
+  \begin{quote}
+   ``Every non-zero, single-variable, degree $n$ polynomial with complex coefficients has, counted with multiplicity, exactly $n$ roots.''
+  \end{quote}}
+ \uncover<1->{Can we apply this to $\frac{dE}{d\bf P}=0$?}
+ \begin{itemize}
+  \item<2->{Must be single-variable polynomial $z$}
+  \item<3->{Must have no dependence on $z^*$, but $E=\braket{\Psi}{\hat H}{\Psi}$ contains $\Psi^*$.}
+ \end{itemize}
+ \uncover<4->{What happens if we remove dependence of $E$ on $\Psi^*$?} 
+\end{frame}
+
+\begin{frame}{Holomorphic Hartree--Fock Theory}
+ \uncover<1->{Redefine density matrix to remove complex conjugation dependence:
+ $$\tilde P_{\mu\nu}=\sum_i^N C_{\mu_ i} C_{\nu i}$$
+ $E\left(\mathbf{\tilde P}\right)$ is now a holomorphic function of several complex variables $C_{\mu i}$}.
+ \begin{itemize}
+  \item<2-> $E\left(\mathbf{\tilde P}\right)$ is complex analytic.
+  \item<3-> Orbitals must be complex--normalised $\sum_{\mu} C_{\mu \cdot} C_{\mu \cdot} = 1.$
+ \end{itemize}
+ \uncover<4->{Can now use revised SCF algorithms to find `holomorphic' UHF states.}
+ \vfill
+ \vspace{2em}
+ \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800, (2014)}
+\end{frame}
+
+\begin{frame}{\ce{H2} STO-3G*}
+ \vspace{-1em}
+ \begin{center}
+  \includegraphics<1->[scale=0.4]{HoloHF/H2holo-3}
+ \end{center}
+ \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800, (2014)}
+\end{frame} 
+
+\begin{frame}{\ce{H2} 6-31G*}
+ \vspace{-1em}
+ \begin{center}
+  \includegraphics<1->[scale=0.4]{HoloHF/H2_4basis}
+ \end{center}
+ \uncover<1->{\tiny H. G. A. Burton and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 12} 167--173, (2016)}
+\end{frame} 
+
+\section{Future Directions}
+\begin{frame}{Future Directions}
+ \begin{itemize}
+  \item<1->{Currently working to apply geometric optimisation methods on holomorphic energy surface.}
+  \item<2->{Hope to understand holomorphic states and the topology of the energy functional.}
+  \item<3->{Investigate the applicability use NOCI for studying larger molecules.}
+  \item<4->{Consider using holomorphic states for other post-HF correlation methods.}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{Future Directions}
+ I would like to thank:
+ \begin{itemize}
+  \item{Alex Thom}
+  \item{The Thom Group}
+  \item{The Cambridge Trust}
+ \end{itemize}
+ %\begin{center}
+ % \includegraphics
+ %\end{center}
+\end{frame}
+\end{document}
