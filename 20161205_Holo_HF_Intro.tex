@@ -56,7 +56,7 @@
 {%
   Holomorphic Hartree--Fock Theory
 }
-\subtitle{An Introduction}
+\subtitle{The Thom Group: Theory RIG}
 
 \author[Burton, Thom]
 {
@@ -85,139 +85,125 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Outline}
-  \tableofcontents
-\end{frame}
-
-
 \section{Introduction}
 
 \subsection{Self--Consistent Field Method}
+\begin{frame}{Motivations}
+WHY ARE WE MOTIVATED?\\
+1) Consider modelling protein structure\\
+2) Molecular dynamics\\
+3) Need parameters!\\
+4) Find parameters from wavefunction... so we need a wave function!
+\end{frame}
 
-\begin{frame}{Self--Consistent Field Method}
+\begin{frame}{Hartree--Fock Theory}
  \begin{itemize}
-  \item<1-> Electrons in molecule described by single Slater determinant $   \ket{\Psi}$.
-
-  \item<2-> Single Slater determinant $\ket{\Psi}$ is made up of spin orbitals $\chi_i$, $i=1\dots N$.
-
-  $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
-\frac{1}{\sqrt{N!}}
-\left|
-   \begin{matrix} \chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) & \cdots & \chi_N(\mathbf{x}_1) \\
-                      \chi_1(\mathbf{x}_2) & \chi_2(\mathbf{x}_2) & \cdots & \chi_N(\mathbf{x}_2) \\
-                      \vdots & \vdots & \ddots & \vdots \\
-                      \chi_1(\mathbf{x}_N) & \chi_2(\mathbf{x}_N) & \cdots & \chi_N(\mathbf{x}_N)
-   \end{matrix} \right|$$
- \end{itemize}
+  \item<1-> Electrons in molecule described by a wave function $\ket{\Psi}$.
+  \item<2->{Wave function satisfies the Schr\"{o}dinger equation $$\hat H \ket{\Psi} = E \ket{\Psi}$$}
+  \item<3-> Approximate electron--electron repulsion as spherical average.
+   \end{itemize}
+    \uncover<3->{
+    \begin{center}
+     \includegraphics<1->[scale=0.2]{hartreeFock}
+    \end{center}}
+   
 \end{frame}
 
 \begin{frame}{Self--Consistent Field Method}
- $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
- \frac{1}{\sqrt{N!}} \left|
-   \begin{matrix} \chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) & \cdots & \chi_N(\mathbf{x}_1) \\
-                      \chi_1(\mathbf{x}_2) & \chi_2(\mathbf{x}_2) & \cdots & \chi_N(\mathbf{x}_2) \\
-                      \vdots & \vdots & \ddots & \vdots \\
-                      \chi_1(\mathbf{x}_N) & \chi_2(\mathbf{x}_N) & \cdots & \chi_N(\mathbf{x}_N)
-   \end{matrix} \right|$$
- \begin{itemize}
-  \item<1-> Spin orbitals are product of a spatial function and one of two spin functions, e.g. $\chi_i(\mathbf{r}) = \phi_i(\mathbf{r}) \ket{\alpha}$.
-
-  \item<2-> Orthonormal spatial orbitals are expressed in a chosen basis (e.g. atomic orbitals),
-  $$\phi_i(\mathbf{r})=\sum_\mu^M\eta_\mu(\mathbf{r}) C_{\mu i}.$$
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Self--Consistent Field Method}
- \begin{itemize}
-  \item<1-> Take an initial guess for the orbital coefficients $C_{\mu i}$.
-  \item<2-> Form density matrix $P_{\mu\nu}=\sum_i^N C_{\mu i} (C_{\nu i})^{*}$.
-  \item<3-> Compute energy as a functional of density $E(P_{\mu\nu})$.
-  \item<3-> e.g. Hartree-Fock: 
-  $$E(P_{\mu\nu}) = h_{nuc} + \sum_{\mu\nu}^N P_{\mu\nu} h_{\mu\nu} + \frac{1}{2} \sum_{\mu\nu\sigma\tau}^N P_{\mu\nu} P_{\sigma\tau} \left(2\left(\mu\nu|\sigma\tau\right) - \left(\mu\tau|\sigma\nu\right)\right)$$
-  $h_{\mu\nu}=\braket{\chi_\mu}{\hat{h}}{\chi_\nu}$,\ \ $\left(\mu\nu|\sigma\tau\right)=\int\int\frac{\chi_\mu^*(\bfr_1)\chi^*_\sigma(\bfr_2)\chi_\nu(\bfr_1)\chi_\tau(\bfr_2)}{|\bfr_1-\bfr_2|}d^3\bfr_1d^3\bfr_2$
-  \item<4-> Solve for $\dbd{E}{P_{\mu\nu}}=0$ (keeping number of electrons fixed).
- \end{itemize}
+ \uncover<1->{How can we compute the wave function?}
+ \begin{enumerate}
+  \item<2-> Make an \alert{initial guess} of wave function $\ket{\Psi_{0}}$.
+  \item<3->  Calculate charge density to generate potential $V(\mathbf{r})$.
+  \item<4->  Solve the Schr\"{o}dinger equation to compute new wavefunction $\ket{\Psi}$.
+  \item<5-> Repeat 2. and 3. until \alert{no further change} to $\ket{\Psi}$.
+  \end{enumerate}
+   \vspace{1em}
+  \uncover<6->{The energy is then computed by the expectation value
+  $$\left< E \right> = \frac{\braket{\Psi}{\hat H}{\Psi}}{\brket{\Psi}{\Psi}}.$$
+  Final $\ket{\Psi}$ is now a \alert{stationary--point} of $\left< E \right>$.}
 \end{frame}
 
 \subsection{SCF Solutions to \ce{H2} STO-3G}
 \begin{frame}{SCF Solutions to \ce{H2}}
- \vspace{-1em}
- \begin{center}
-  \includegraphics<1->[scale=0.4]{HoloHF/H2_sto-3g_RHF}
- \end{center}
+ \uncover<1->{
+  Restricted Hartree--Fock (RHF): \\
+  \hspace{1.5em} Spin--up and spin--down electrons must have same set of spatial orbitals.
+ }
+ \uncover<2->{
+  \begin{center}
+   \includegraphics<1->[scale=0.32]{H2_sto-3g_RHF}
+  \end{center}
+ }
 \end{frame}
 
 
 \begin{frame}{SCF Solutions to \ce{H2}}
- \vspace{-1em}
- \begin{center}
-  \includegraphics<1->[scale=0.4]{HoloHF/H2_sto-3g_UHF}
- \end{center}
-
+ \uncover<1->{
+  Unrestricted Hartree--Fock (UHF): \\
+  \hspace{1.5em} Spin--up and spin--down electrons can have different spatial orbitals.
+ }
+ \uncover<2->{
+  \begin{center}
+   \includegraphics<1->[scale=0.32]{H2_sto-3g_UHF}
+  \end{center}
+ }
 \end{frame}
 
 \section{Configuration Interaction}
-\begin{frame}{Configuration Interaction}
+\begin{frame}{Introducing Electron Correlation}
  \uncover<1->{Full Configuration Interaction:}
   \begin{itemize}
-   \item<2->{Wave function is constructed as a linear combination of Slater determinants}
-             $$\ket{\Psi_0^{\mathrm{FCI}}} = \sum_i C_i \ket{D_i}$$
-   \item<3->{Coefficients $C_i$ are determined by variational optimization of $\left< E \right>$.}
-   \item<4->{Slater determinants are formed from excitations out of Hartree--Fock reference. Scales as $\mathcal{O}(N!)$ or $\mathcal{O}(N^N)$.}
+   \item<2->{Wave function is constructed as a linear combination of excited states from a given reference.}
+   \item<3-> {e.g. for $\ket{\sigma_{g}^{2}}$ reference in \ce{H2}:
+             $$\ket{\Psi_0^{\mathrm{FCI}}} = C_{1} \ket{\sigma_{g}^{2}} + C_{2} \ket{\sigma_{g}^{1}\sigma_{u}^{1}} + C_{3} \ket{\sigma_{u}^{1}\sigma_{g}^{1}} + C_{4} \ket{\sigma_{u}^{2}}$$}
   \end{itemize}
-%\end{frame}
-
-%\begin{frame}{Configuration Interaction}
- \uncover<5->{Truncated Configuration Interaction:}
+  \uncover<0-> {\vspace{-1.5em}}
+  \begin{center}
+   \includegraphics<3->[scale=0.28]{FCIdiag}
+  \end{center}
   \begin{itemize}
-   \item<6->{Only includes excited determinants up to a given excitation level, e.g. CISD includes only singles and doubles.}
-   \item<7->{This is \alert{not size--extensive}.}
+ \uncover<0-> {\vspace{-1.5em}}
+  \item<4-> {Gives \alert{exact energy} but is expensive and scales as $\mathcal{O}(N!)$ or $\mathcal{O}(N^N)$.}
+  \item<5-> {Require \alert{all excitations} or not linear with system size}
   \end{itemize}
 \end{frame}
  
 \subsection{Non--orthogonal Configuration Interaction}
 \begin{frame}{Non--orthogonal Configuration Interaction}
- \uncover<1->{SCF states are size--extensive and could be used as a basis for CI methods to produce size--extensive energies.}
+ \uncover<1->{Can we use the SCF states instead?}
  \begin{itemize}
-  \item<2-> But different SCF solutions ($\up{x}{\Psi}$ and $\up{y}{\Psi}$) are \alert{not orthogonal}.
-  \item<3-> We must solve the generalized eigenvalue problem ${\bf H v}=E{\bf S v}$ instead.
-  \item<4-> Hamilton matrix elements are given by $H_{xy}=\braket{\up{x}\Psi}{\hat H}{\up y\Psi}$.
-  \item<5-> Overlap matrix elements are given by $S_{xy}=\brket{\up{x}\Psi}{\up y\Psi}$.
- \end{itemize}
-\vspace{1em}
- \uncover<6->{But the number of SCF solutions is \alert{not constant} across all geometries!}
-\vfill
+  \item<2-> RHF best describes equilibrium; UHF best describes dissociation.
+  \item<3-> SCF states already scale with system size.
+  \item<4-> SCF states are not mutually orthogonal, $\brket{\up{x}\Psi}{\up{y}\Psi} \neq \delta_{x y}.$
+  \end{itemize}
+   \vspace{1em}
+ \uncover<5->{We must use Non-orthogonal Configuration Interaction.\\ 
+ \begin{itemize}
+ \item This scales as $\mathcal{O}\left( n_s^2\ \mathrm{max}\left(n^3, N^2\right) \right)$.}
+ \end{itemize} 
+ \vspace{1em}
+ \begin{center}
+ \uncover<5->{But the number of SCF solutions is \alert{not constant} across all geometries!}
+ \end{center}
 \vspace{2em}
-\uncover<3->{\tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
+\uncover<4->{\tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
 \end{frame}
 
 \subsection{Holomorphic Hartree--Fock Theory}
 \begin{frame}{Holomorphic Hartree--Fock Theory}
- \uncover<1->{Fundamental Theorem of Algebra:}
- \uncover<1->{
+ \uncover<1->{Fundamental Theorem of Algebra:
   \begin{quote}
-   ``Every non-zero, single-variable, degree $n$ polynomial with complex coefficients has, counted with multiplicity, exactly $n$ roots.''
+   ``Every non-zero, single-variable, \alert{degree $n$ polynomial} with complex coefficients has, counted with multiplicity, exactly \alert{$n$ roots}.''
   \end{quote}}
- \uncover<1->{Can we apply this to $\frac{dE}{d\bf P}=0$?}
+  \vspace{-1.5em}
  \begin{itemize}
-  \item<2->{Must be single-variable polynomial $z$}
-  \item<3->{Must have no dependence on $z^*$, but $E=\braket{\Psi}{\hat H}{\Psi}$ contains $\Psi^*$.}
+  \item<2->{Must be single-variable polynomial $z$.}
+  \item<3->{Must have no dependence on $z^*$.}
  \end{itemize}
- \uncover<4->{What happens if we remove dependence of $E$ on $\Psi^*$?} 
-\end{frame}
-
-\begin{frame}{Holomorphic Hartree--Fock Theory}
- \uncover<1->{Redefine density matrix to remove complex conjugation dependence:
- $$\tilde P_{\mu\nu}=\sum_i^N C_{\mu_ i} C_{\nu i}$$
- $E\left(\mathbf{\tilde P}\right)$ is now a holomorphic function of several complex variables $C_{\mu i}$}.
- \begin{itemize}
-  \item<2-> $E\left(\mathbf{\tilde P}\right)$ is complex analytic.
-  \item<3-> Orbitals must be complex--normalised $\sum_{\mu} C_{\mu \cdot} C_{\mu \cdot} = 1.$
- \end{itemize}
- \uncover<4->{Can now use revised SCF algorithms to find `holomorphic' UHF states.}
- \vfill
- \vspace{2em}
- \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800, (2014)}
+ \uncover<4-> {What happens if we remove dependence of $\left< E \right>$ on $\Psi^*$?
+ $$\left< \tilde E \right> = \frac{\braket{\Psi^*}{\hat H}{\Psi}}{\brket{\Psi^*}{\Psi}}.$$}
+ \vspace{1em}
+ \uncover<4->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800, (2014)}
 \end{frame}
 
 \begin{frame}{\ce{H2} STO-3G*}
@@ -239,10 +225,9 @@
 \section{Future Directions}
 \begin{frame}{Future Directions}
  \begin{itemize}
-  \item<1->{Currently working to apply geometric optimisation methods on holomorphic energy surface.}
-  \item<2->{Hope to understand holomorphic states and the topology of the energy functional.}
-  \item<3->{Will investigate the applicability of using NOCI for studying larger molecules.}
-  \item<4->{Consider using holomorphic states for other post-HF correlation methods.}
+  \item<1->{Currently working to develop methods for reliably finding hUHF states.}
+  \item<2->{Hope to understand structure of holomorphic states.}
+  \item<3->{Will study applicability of NOCI for larger molecules.}
  \end{itemize}
 \end{frame}
 
