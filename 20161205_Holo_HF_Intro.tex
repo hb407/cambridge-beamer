@@ -88,12 +88,28 @@
 \section{Introduction}
 
 \subsection{Self--Consistent Field Method}
-\begin{frame}{Motivations}
-WHY ARE WE MOTIVATED?\\
-1) Consider modelling protein structure\\
-2) Molecular dynamics\\
-3) Need parameters!\\
-4) Find parameters from wavefunction... so we need a wave function!
+\begin{frame}{The Big Picture}
+\begin{columns}
+ \begin{column}{0.55\textwidth}
+ \uncover<1-> {How might we model biomolecular interactions?}
+  \vspace{1em}
+  \begin{enumerate}
+   \item<2-> Simulate using molecular dynamics.
+   \item<3-> Molecular dynamics requires a force field.
+   \item<4-> Find parameters using \textit{ab initio} methods.
+  \end{enumerate}
+ \end{column}
+ \begin{column}{0.45\textwidth}
+ \includegraphics<-1>[scale=0.375]{motivations1.png}
+ \includegraphics<1-2>[scale=0.375]{motivations2.png}
+ \includegraphics<2-3>[scale=0.375]{motivations3.png}
+ \includegraphics<3-4>[scale=0.375]{motivations4.png}
+ 
+ \end{column}
+\end{columns}
+ \vspace{-1.5em}
+ \uncover<1->{\tiny http://www.man.poznan.pl/CBB/research.html\\}
+ \uncover<2->{\tiny D. J. Wales and T. Head--Gordon, {\it J. Phys. Chem. B}, {\bf 116}, 8394--8411, (2012)}
 \end{frame}
 
 \begin{frame}{Hartree--Fock Theory}
@@ -164,7 +180,6 @@ WHY ARE WE MOTIVATED?\\
   \begin{itemize}
  \uncover<0-> {\vspace{-1.5em}}
   \item<4-> {Gives \alert{exact energy} but is expensive and scales as $\mathcal{O}(N!)$ or $\mathcal{O}(N^N)$.}
-  \item<5-> {Require \alert{all excitations} or not linear with system size}
   \end{itemize}
 \end{frame}
  
@@ -173,11 +188,10 @@ WHY ARE WE MOTIVATED?\\
  \uncover<1->{Can we use the SCF states instead?}
  \begin{itemize}
   \item<2-> RHF best describes equilibrium; UHF best describes dissociation.
-  \item<3-> SCF states already scale with system size.
-  \item<4-> SCF states are not mutually orthogonal, $\brket{\up{x}\Psi}{\up{y}\Psi} \neq \delta_{x y}.$
+  \item<3-> SCF states are not mutually orthogonal, $\brket{\up{x}\Psi}{\up{y}\Psi} \neq \delta_{x y}.$
   \end{itemize}
    \vspace{1em}
- \uncover<5->{We must use Non-orthogonal Configuration Interaction.\\ 
+ \uncover<4->{We must use Non-orthogonal Configuration Interaction.\\ 
  \begin{itemize}
  \item This scales as $\mathcal{O}\left( n_s^2\ \mathrm{max}\left(n^3, N^2\right) \right)$.}
  \end{itemize} 
