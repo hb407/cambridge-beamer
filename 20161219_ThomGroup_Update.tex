@@ -56,13 +56,12 @@
 {%
   Holomorphic Hartree--Fock Theory
 }
-\subtitle{An Introduction}
+\subtitle{The Thom Group: Theory RIG}
 
 \author[Burton, Thom]
 {
   \hskip-1.7mm
-  Hugh~Burton% \and
-  %Alex~Thom \and
+  Hugh~Burton %\and
 }
 
 \institute[Burton and others]
@@ -75,8 +74,7 @@
 %  Bar-Ilan University, Ramat-Gan, Israel
 }
 
-\date[P2P 2016]
-{Peer-to-Peer Presentations, Michaelmas 2016}
+\date[December 2016]{December 2016}
 
 % The main document
 
@@ -86,24 +84,21 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Outline}
-  \tableofcontents
-\end{frame}
-
+%\begin{frame}{Outline}
+%  \tableofcontents
+%\end{frame}
 
 \section{Introduction}
 
 \subsection{Self--Consistent Field Method}
 
 \begin{frame}{Self--Consistent Field Method}
-%introduction to SCF method and wavefunction based chem
-%include HF energy functional etc
-\begin{itemize}
-\item<1-> Electrons in molecule described by single Slater determinant $\ket{\Psi}$.
+ \begin{itemize}
+  \item<1-> Electrons in molecule described by single Slater determinant $   \ket{\Psi}$.
 
-\item<2-> Single Slater determinant $\ket{\Psi}$ is made up of spin orbitals $\chi_i$, $i=1\dots N$.
+  \item<2-> Single Slater determinant $\ket{\Psi}$ is made up of spin orbitals $\chi_i$, $i=1\dots N$.
 
-$$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
+  $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
 \frac{1}{\sqrt{N!}}
 \left|
    \begin{matrix} \chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) & \cdots & \chi_N(\mathbf{x}_1) \\
@@ -111,7 +106,7 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
                       \vdots & \vdots & \ddots & \vdots \\
                       \chi_1(\mathbf{x}_N) & \chi_2(\mathbf{x}_N) & \cdots & \chi_N(\mathbf{x}_N)
    \end{matrix} \right|$$
-\end{itemize}
+ \end{itemize}
 \end{frame}
 
 \begin{frame}{Self--Consistent Field Method}
@@ -126,7 +121,7 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
   \item<1-> Spin orbitals are product of a spatial function and one of two spin functions, e.g. $\chi_i(\mathbf{r}) = \phi_i(\mathbf{r}) \ket{\alpha}$.
 
   \item<2-> Orthonormal spatial orbitals are expressed in a chosen basis (e.g. atomic orbitals),
-  $$\phi_i(\mathbf{r})=\sum_\mu^M\chi_\mu(\mathbf{r}) C_{\mu i}.$$
+  $$\phi_i(\mathbf{r})=\sum_\mu^M\eta_\mu(\mathbf{r}) C_{\mu i}.$$
   \end{itemize}
 \end{frame}
 
@@ -136,8 +131,8 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
   \item<2-> Form density matrix $P_{\mu\nu}=\sum_i^N C_{\mu i} (C_{\nu i})^{*}$.
   \item<3-> Compute energy as a functional of density $E(P_{\mu\nu})$.
   \item<3-> e.g. Hartree-Fock: 
-  $$E(P_{\mu\nu}) = h_{nuc} + \sum_{\mu\nu}^N h_{\mu\nu} P_{\mu\nu} + \frac{1}{2} \sum_{\mu\nu\sigma\tau}^N P_{\mu\nu} P_{\sigma\tau} \left(2\left(\mu\nu|\sigma\tau\right) - \left(\mu\tau|\sigma\nu\right)\right)$$
-  $h_{\mu\nu}=\braket{\chi_\mu}{\hat{h}}{\chi_\nu}$, $\left(\mu\nu|\sigma\tau\right)=\int\int\frac{\chi_\mu^*(\bfr_1)\chi^*_\sigma(\bfr_2)\chi_\nu(\bfr_1)\chi_\tau(\bfr_2)}{|\bfr_1-\bfr_2|}d^3\bfr_1d^3\bfr_2$
+  $$E(P_{\mu\nu}) = h_{nuc} + \sum_{\mu\nu}^N P_{\mu\nu} h_{\mu\nu} + \frac{1}{2} \sum_{\mu\nu\sigma\tau}^N P_{\mu\nu} P_{\sigma\tau} \left(2\left(\mu\nu|\sigma\tau\right) - \left(\mu\tau|\sigma\nu\right)\right)$$
+  $h_{\mu\nu}=\braket{\chi_\mu}{\hat{h}}{\chi_\nu}$,\ \ $\left(\mu\nu|\sigma\tau\right)=\int\int\frac{\chi_\mu^*(\bfr_1)\chi^*_\sigma(\bfr_2)\chi_\nu(\bfr_1)\chi_\tau(\bfr_2)}{|\bfr_1-\bfr_2|}d^3\bfr_1d^3\bfr_2$
   \item<4-> Solve for $\dbd{E}{P_{\mu\nu}}=0$ (keeping number of electrons fixed).
  \end{itemize}
 \end{frame}
@@ -146,32 +141,35 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
 \begin{frame}{SCF Solutions to \ce{H2}}
  \vspace{-1em}
  \begin{center}
-  \includegraphics<1->[scale=0.4]{HoloHF/H2_4basis}
+
  \end{center}
 \end{frame}
 
 
 \begin{frame}{SCF Solutions to \ce{H2}}
-%introduce UHF solutions and advantages/disadvantages
+ \vspace{-1em}
+ \begin{center}
+
+ \end{center}
+
 \end{frame}
 
-\section{Electron Correlation}
+\section{Configuration Interaction}
 \begin{frame}{Configuration Interaction}
  \uncover<1->{Full Configuration Interaction:}
   \begin{itemize}
    \item<2->{Wave function is constructed as a linear combination of Slater determinants}
              $$\ket{\Psi_0^{\mathrm{FCI}}} = \sum_i C_i \ket{D_i}$$
    \item<3->{Coefficients $C_i$ are determined by variational optimization of $\left< E \right>$.}
-   \item<4->{Slater determinants are formed from excitations out of Hartree--Fock reference.}
-   \item<5->{Gives exact wave function for a given basis but scales as $N!$ or $N^N$.}
+   \item<4->{Slater determinants are formed from excitations out of Hartree--Fock reference. Scales as $\mathcal{O}(N!)$ or $\mathcal{O}(N^N)$.}
   \end{itemize}
 %\end{frame}
 
 %\begin{frame}{Configuration Interaction}
- \uncover<6->{Truncated Configuration Interaction:}
+ \uncover<5->{Truncated Configuration Interaction:}
   \begin{itemize}
-   \item<7->{Only include excited determinants up to a given excitation level, e.g. CISD includes only singles and doubles.}
-   \item<8->{It is \alert{not size--extensive}.}
+   \item<6->{Only includes excited determinants up to a given excitation level, e.g. CISD includes only singles and doubles.}
+   \item<7->{This is \alert{not size--extensive}.}
   \end{itemize}
 \end{frame}
  
@@ -223,7 +221,7 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
 \begin{frame}{\ce{H2} STO-3G*}
  \vspace{-1em}
  \begin{center}
-  \includegraphics<1->[scale=0.4]{HoloHF/H2holo-3}
+
  \end{center}
  \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800, (2014)}
 \end{frame} 
@@ -231,7 +229,7 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
 \begin{frame}{\ce{H2} 6-31G*}
  \vspace{-1em}
  \begin{center}
-  \includegraphics<1->[scale=0.4]{HoloHF/H2_4basis}
+
  \end{center}
  \uncover<1->{\tiny H. G. A. Burton and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 12} 167--173, (2016)}
 \end{frame} 
@@ -246,15 +244,16 @@ $$\ket{\Psi(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N)} =
  \end{itemize}
 \end{frame}
 
-\begin{frame}{Future Directions}
+\begin{frame}{Acknowledgements}
  I would like to thank:
+ 
  \begin{itemize}
   \item{Alex Thom}
   \item{The Thom Group}
   \item{The Cambridge Trust}
  \end{itemize}
- %\begin{center}
- % \includegraphics
- %\end{center}
+ \begin{center}
+  \includegraphics[scale=0.7]{template/CT_logo.jpg}
+ \end{center}
 \end{frame}
 \end{document}
