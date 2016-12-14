@@ -48,6 +48,7 @@
 \def\PsiCC{\Psi_{\rm CC}}
 \def\PsiCI{\Psi_{\rm CI}}
 \newcommand{\up}[2] {{^{#1}\!#2}}
+\def\hE{\tilde{E}}
 
 
 % Author, Title, etc.
@@ -84,114 +85,68 @@
   \titlepage
 \end{frame}
 
-%\begin{frame}{Outline}
-%  \tableofcontents
-%\end{frame}
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
 
-\section{Introduction}
+\section{Revision:}
 
 \subsection{Self--Consistent Field Method}
-
 \begin{frame}{Self--Consistent Field Method}
  \begin{itemize}
-  \item<1-> Electrons in molecule described by single Slater determinant $   \ket{\Psi}$.
-  \item<2-> Single Slater determinant $\ket{\Psi}$ is made up of spin orbitals $\chi_i$, $i=1\dots N$.
-  $$\ket{\Psi(\mathbf{x}_1, \ldots, \mathbf{x}_N)} =
-\frac{1}{\sqrt{N!}}
-\left|
-   \begin{matrix} \chi_1(\mathbf{x}_1) & \cdots & \chi_N(\mathbf{x}_1) \\
-                      \vdots &  \ddots & \vdots \\
-                      \chi_1(\mathbf{x}_N) &  \cdots & \chi_N(\mathbf{x}_N)
-   \end{matrix} \right|$$
-   \item<3-> Spin orbitals are product of a spatial function and one of two spin functions, e.g. $\chi_i(\mathbf{r}) = \phi_i(\mathbf{r}) \ket{\alpha}$.
-   \item<4-> Spatial orbitals constructed from chosen basis set 
-   $$\phi_i(\mathbf{r})=\sum_\mu^M\eta_\mu(\mathbf{r}) C_{\mu i}.$$
+  \item Begin with set of real orthonormal basis functions $\eta_\mu (\mathbf{r})$.
+  \item Construct orthonormal molecular orbitals $\psi_i(\mathbf{r}) = \sum_\mu^n \eta_\mu (\mathbf{r}) C_{\mu i}$.
+  \item Form one--particle density matrix $P_{\mu\nu}=\sum_i^N C_{\mu i} (C_{\nu i})^{*}$.
+  \item Energy is a functional of density;
+  $$E(P_{\mu\nu}) = h_{nuc} + \sum_{\mu\nu}^N P_{\mu\nu} h_{\mu\nu} + \frac{1}{2} \sum_{\mu\nu\sigma\tau}^N P_{\mu\nu} P_{\sigma\tau} \left(2\left(\mu\nu|\sigma\tau\right) - \left(\mu\tau|\sigma\nu\right)\right)$$.
+  \item Optimal orbitals are given by $\dbd{E}{P_{\mu\nu}}=0$.
  \end{itemize}
 \end{frame} 
 
-\begin{frame}{Self--Consistent Field Method}
- \begin{itemize}
-  \item<1-> Take an initial guess for the orbital coefficients $C_{\mu i}$.
-  \item<2-> Form density matrix $P_{\mu\nu}=\sum_i^N C_{\mu i} (C_{\nu i})^{*}$.
-  \item<3-> Compute Hartree--Fock energy as a functional of density:
-  $$E(P_{\mu\nu}) = h_{nuc} + \sum_{\mu\nu}^N P_{\mu\nu} h_{\mu\nu} + \frac{1}{2} \sum_{\mu\nu\sigma\tau}^N P_{\mu\nu} P_{\sigma\tau} \left(2\left(\mu\nu|\sigma\tau\right) - \left(\mu\tau|\sigma\nu\right)\right)$$
-  $h_{\mu\nu}=\braket{\chi_\mu}{\hat{h}}{\chi_\nu}$,\ \ $\left(\mu\nu|\sigma\tau\right)=\int\int\frac{\chi_\mu^*(\bfr_1)\chi^*_\sigma(\bfr_2)\chi_\nu(\bfr_1)\chi_\tau(\bfr_2)}{|\bfr_1-\bfr_2|}d^3\bfr_1d^3\bfr_2$
-  \vspace{0.5em}
-  \item<4-> Solve for $\dbd{E}{P_{\mu\nu}}=0$ (keeping number of electrons fixed).
- \end{itemize}
-\end{frame}
-
 \begin{frame}{SCF Solutions to \ce{H2} STO-3G}
-Restricted Hartree--Fock:
   \begin{center}
-    \includegraphics[scale=0.3]{H2_sto-3g_RHF}
+    \includegraphics[scale=0.4]{normal_UHF_HH_sto-3g}
   \end{center}
 \end{frame}
 
-\begin{frame}{SCF Solutions to \ce{H2} STO-3G}
-Unrestricted Hartree--Fock:
-  \begin{center}
-    \includegraphics[scale=0.3]{H2_sto-3g_UHF}
-  \end{center}
-\end{frame}
-
-\subsection{Non--orthogonal Configuration Interaction}
-\begin{frame}{Non--orthogonal Configuration Interaction}
- \uncover<1->{SCF states are size--extensive and could be used as a basis for CI methods to produce size--extensive energies.}
+\subsection{NOCI}
+\begin{frame}{Non--Orthogonal CI}
+SCF states are size--extensive and could be a basis for CI methods:
+\vspace{1em}
  \begin{itemize}
-  \item<2-> Different SCF solutions ($\up{x}{\Psi}$ and $\up{y}{\Psi}$) are \alert{not orthogonal}.
-  \item<3-> Solve the generalized eigenvalue problem ${\bf H v}=E{\bf S v}$.
-  \item<4-> Hamilton matrix elements are given by $H_{xy}=\braket{\up{x}\Psi}{\hat H}{\up y\Psi}$.
-  \item<5-> Overlap matrix elements are given by $S_{xy}=\brket{\up{x}\Psi}{\up y\Psi}$.
-  \item<6-> Scales as $\mathcal{O}\left( n_s^2\ \mathrm{max}\left(n^3, N^2\right) \right).$
+  \item Different SCF solutions ($\up{x}{\Psi}$ and $\up{y}{\Psi}$) are \alert{not orthogonal}.
+  \item Solve the generalized eigenvalue problem ${\bf H v}=E{\bf S v}$.
+  \item Hamilton matrix elements are given by $H_{xy}=\braket{\up{x}\Psi}{\hat H}{\up y\Psi}$.
+  \item Overlap matrix elements are given by $S_{xy}=\brket{\up{x}\Psi}{\up y\Psi}$.
+  \item Scales as $\mathcal{O}\left( n_s^2\ \mathrm{max}\left(n^3, N^2\right) \right).$
  \end{itemize}
-\uncover<3->{\vspace{2em} \tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
+ \vspace{0.5em}
+   \begin{center} 
+BUT the number of SCF solutions is \alert{not constant}!!!
+  \end{center}
+\vspace{0.5em} 
+{\tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
 \end{frame}
 
 \begin{frame}{NOCI for \ce{H2} STO--3G}
-  \begin{center} 
-    \uncover<1-> BUT the number of SCF solutions is \alert{not constant}!!!
-  \end{center}
   \begin{center}
-    \uncover<2-> {
-        \includegraphics[scale=0.38]{H2_normal}
-        }
+  \includegraphics[scale=0.4]{H2_normal}
   \end{center}
 \end{frame}
 
-
-\subsection{SCF Solutions to \ce{H2} STO-3G}
-\begin{frame}{SCF Solutions to \ce{H2}}
- \vspace{-1em}
- \begin{center}
-
- \end{center}
-\end{frame}
-
-
-\begin{frame}{SCF Solutions to \ce{H2}}
- \vspace{-1em}
- \begin{center}
-
- \end{center}
-
-\end{frame}
-
-
-
-\section{Holomorphic Hartree--Fock}
+\subsection{Holomorphic HF}
 \begin{frame}{Holomorphic Hartree--Fock Theory}
- \uncover<1->{Fundamental Theorem of Algebra:}
- \uncover<1->{
+\uncover<1->{\begin{small}
   \begin{quote}
-   ``Every non-zero, single-variable, \alert{degree $n$ polynomial} with complex coefficients has, counted with multiplicity, exactly \alert{$n$ roots}.''
-  \end{quote}}
- \uncover<1->{Can we apply this to $\frac{dE}{d\bf P}=0$?}
- \begin{itemize}
+   ``Every non-zero, single-variable, \alert{degree $n$} polynomial with complex coefficients has, counted with multiplicity, exactly \alert{$n$ roots}.''
+  \end{quote}
+\end{small}
+Can we apply this to $\frac{dE}{d\bf P}=0$?} 
+\begin{itemize}
   \item<2->{Must be single-variable polynomial $z$}
-  \item<3->{Must have no dependence on $z^*$, but $E=\frac{\braket{\Psi}{\hat H}{\Psi}}{\brket{\Psi}{\Psi}}$ contains $\Psi^*$.}
+  \item<2->{Must have no dependence on $z^*$, but $E(P_{\mu \nu})$ depends on $C_{\mu i}^*$.}
  \end{itemize}
- \uncover<4->{What happens if we remove dependence of $E$ on $\Psi^*$?} 
+ \uncover<2->{Remove dependence on $C_{\mu i}^*$ by defining $\tilde{E}=\frac{\braket{\Psi^*}{\hat H}{\Psi}}{\brket{\Psi^*}{\Psi}}$}
 \end{frame}
 
 \begin{frame}{Holomorphic energy functional}
@@ -208,18 +163,7 @@ Unrestricted Hartree--Fock:
  \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800,(2014)}
 \end{frame}
 
-\begin{frame}{A Geometric Approach}
-\begin{itemize}
-   \item<1-> Begin with set of N orthonormal orbitals ${ \phi_i }$,
-  $$\phi_i(\mathbf{r})=\sum_\mu^M\eta_\mu(\mathbf{r}) C_{\mu i}.$$
-   \item<2-> Construct new set of orthonormal orbitals which minimise energy:
-  $$\psi_i(\mathbf{r})=\sum_\mu^M\eta_\mu(\mathbf{r}) D_{\mu i}.$$
-   \item<3-> Can write optimal set as unitary transformation of initial set:
-   $$\mathbf{D} = \mathbf{C} \mathbf{U}.$$
-  \end{itemize}
- 
-\end{frame}
-
+\section{Case Study: HZ STO-3G}
 \begin{frame}{A simple case study: \ce{HZ}\ \ STO--3G}
 \begin{itemize}
  \item<1->{Two electrons in two basis functions (e.g. \ce{H2} - STO-3G).\\ }
@@ -258,7 +202,122 @@ Unrestricted Hartree--Fock:
  \uncover<1->{\tiny H. G. A. Burton and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 12} 167--173, (2016)}
 \end{frame} 
 
-\section{Future Directions}
+
+
+
+
+
+
+\section{Geometric Approach:}
+\subsection{Geometric description of Hartree--Fock}
+\begin{frame}{A Geometric Approach: ``Standard'' Hartree--Fock}
+\uncover<1->{Optimal set of orbitals given by 
+$\psi_i(\mathbf{r})=\sum_\mu^n\eta_\mu(\mathbf{r}) C_{\mu i}.$  }
+\begin{itemize}
+  \item<1-> $\mathbf{C}$ must be element of unitary group:
+  $$\mathrm{U} \left( n \right) = \{ \mathbf{M} \in \mathbb{C}^{n \times n} | \mathbf{M}^{\dagger} \mathbf{M} = \mathbf{I} \}.$$
+\end{itemize}
+\vspace{-1em}
+\uncover<2->{Energy depends on density matrix $P_{\mu\nu}=\sum_i^N C_{\mu i} (C^{\dagger})_{i \nu}$}
+\begin{itemize}
+  \item<2-> Depends only on first $N$ columns of $\mathbf{C}.$
+  \item<2-> Invariant to unitary transformations amongst occupied orbitals.
+\end{itemize}
+\uncover<3->{Suitable matrices are points on the \alert{Grassmann Manifold} $\mathrm{Gr}(n,N):$
+\begin{quote}
+  The set of all $(n \times N)$ unitary matrices whose columns span the same subspace.
+\end{quote}}
+\end{frame}
+
+\begin{frame}{A Geometric Approach: Holomorphic Hartree--Fock}
+\uncover<1->{Now restrict such that $\mathbf{C}^T \mathbf{C} = \mathbf{I}:$}
+\begin{itemize}
+  \item<1-> $\mathbf{C}$ must be element of $\mathbb{C}$-orthogonal group:
+  $$\mathbb{C}\mathrm{O} \left( n \right) = \{ \mathbf{M} \in \mathbb{C}^{n \times n} | \mathbf{M}^{T} \mathbf{M} = \mathbf{I} \}.$$
+\end{itemize}
+\vspace{-1em}
+\uncover<2->{Energy depends on holo-density matrix $\tilde{P}_{\mu\nu}=\sum_i^N C_{\mu i} (C^{T})_{i \nu}$\\}
+\begin{itemize}
+\item<3-> Suitable matrices are now points on the \alert{$\mathbb{C}$-orthogonal} Grassmann Manifold $\mathbb{C}\mathrm{Gr}(n,N):$
+\end{itemize}
+\uncover<3->{
+\begin{quote}
+  The set of all $(n \times N)$ $\mathbb{C}$-orthogonal matrices whose columns span the same subspace.
+\end{quote}
+}
+\end{frame}
+
+\subsection{BFGS Algorithm}
+\begin{frame}{BFGS Algorithm}
+\uncover<1->{
+A quasi--Newton optimization algorithm:}
+\begin{itemize}
+\item Fit local quadratic using \alert{approximate} (inverse) Hessian and take step to centre.
+\item Converge onto \alert{all types} of stationary points.
+\item Super linear convergence in vicinity of stationary point.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{BFGS Algorithm}
+\begin{enumerate}
+  \item<1-> Take an initial guess $\mathbf{x}_0$ and approximate inverse Hessian $\mathbf{B}_0$.
+  \item<1-> Obtain search direction by solving $\mathbf{p}_k = - \mathbf{B}_k \mathbf{g}_k.$
+  \item<1-> Take line search to find optimal step length $t_k$.
+  \item<1-> Update position: $\mathbf{x}_{k+1} = \mathbf{x}_{k} + t_k \mathbf{p}_{k}.$
+  \item<1-> Recompute inverse Hessian using BFGS update:
+  $$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \mathbf{s}_k} \right ) \mathbf{B}_{k} \left (\mathbf{I}-\frac { \mathbf{y}_k \mathbf{s}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \mathbf{s}_k} \right )+\frac
+{\mathbf{s}_k \mathbf{s}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \, \mathbf{s}_k}$$
+where $\mathbf{s}_k = \mathbf{x}_{k+1} - \mathbf{x}_{k}$ and $\mathbf{y}_k = \mathbf{g}_{k+1} - \mathbf{g}_{k}.$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Constrained BFGS}
+\begin{enumerate}
+\item<1->{Compute gradient in tangent space ($\mathbf{C}^T \mathbf{\Delta} = 0$):
+$$\mathbf{g}_k = (\mathbf{I} - \mathbf{C}_k \mathbf{C}_k^T)\ \frac{\partial \hE}{\partial \mathbf{C}_k}$$}
+\item<1->{Compute search direction ($\mathbf{p}_k = - \mathbf{B}_k \mathbf{g}_k$).}
+\item<1->{Minimise $||\mathbf{g}(\mathbf{C})||$ along ``geodesic'' with initial direction $\mathbf{p}_k$:
+$$\mathbf{C}(t) = \mathbf{C}_k \mathbf{V} \cos(\mathbf{\Sigma} t)\mathbf{V}^T + \mathbf{U} \sin(\mathbf{\Sigma} t) \mathbf{V}^T$$
+where $\mathbf{U \Sigma V}^T$ is the complex SVD of $\mathbf{p}_k$.}
+\item<1->{Update position:
+$$\mathbf{C}_{k+1} = \mathbf{C}(t_{min}).$$}
+\end{enumerate}
+  \uncover<1->{\tiny B. Savas and L. Lim, {\it SIAM J. Sci. Comput.}, {\bf 32}, 3352--3393, (2010)\\ A. Edelman, T. A. Arias, S. T. Smith, {\it SIAM J. Matrix Anal. Appl.}, {\bf 20}, 303--353, (1998)}
+\end{frame}
+
+\begin{frame}{Constrained BFGS}
+6. Update approximate Hessian...
+\begin{itemize}
+\item<1->{How do we compute $\mathbf{y}_k = \mathbf{g}_{k+1} - \mathbf{g}_{k}$?}
+\item<1->{$\mathbf{g}_{k}$ and $\mathbf{g}_{k+1}$ must be evaluated at \alert{same point}.} 
+
+\item<2->{Transport matrix defined as:
+$$T(t) = \left[\mathbf{C} \mathbf{V}\ \ \mathbf{V} \right] \left[
+ \begin{matrix}
+ -\sin(\mathbf{\Sigma} t)\\
+  \cos(\mathbf{\Sigma} t)
+  \end{matrix} \right] \mathbf{U}^T + (\mathbf{I} - \mathbf{U} \mathbf{U}^T)$$.}
+\item<2->{Using parallel transported gradient, $\tau \mathbf{g}_k$, gives $$\mathbf{y}_k = \mathbf{g}_{k+1} - T(t_{min})\mathbf{g}_{k}.$$
+  } 
+ \end{itemize}
+ \uncover<1->{\tiny B. Savas and L. Lim, {\it SIAM J. Sci. Comput.}, {\bf 32}, 3352--3393, (2010)\\ A. Edelman, T. A. Arias, S. T. Smith, {\it SIAM J. Matrix Anal. Appl.}, {\bf 20}, 303--353, (1998)}
+\end{frame}
+
+\begin{frame}{Constrained BFGS}
+6. Update approximate inverse Hessian...
+\begin{itemize}
+\item<1->{Must also parralel transport $B_{k}$:
+$$\tau \mathbf{B}_k = (\mathbf{I} \otimes T(t_{min}))\ \mathbf{B}_k \ (\mathbf{I} \otimes T(t_{min})^{-1})$$}
+\item<1->{Can now compute updated inverse Hessian:
+$$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \mathbf{s}_k} \right ) \tau \mathbf{B}_{k} \left (\mathbf{I}-\frac { \mathbf{y}_k \mathbf{s}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \mathbf{s}_k} \right )+\frac
+{\mathbf{s}_k \mathbf{s}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \, \mathbf{s}_k}.$$}
+ \end{itemize}
+ \vspace{2em}
+ \uncover<1->{\tiny B. Savas and L. Lim, {\it SIAM J. Sci. Comput.}, {\bf 32}, 3352--3393, (2010)}
+
+\end{frame}
+
+\section{Slippery Issues}
 \begin{frame}{Future Directions}
  \begin{itemize}
   \item<1->{Currently working to apply geometric optimisation methods on holomorphic energy surface.}
