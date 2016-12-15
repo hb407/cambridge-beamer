@@ -17,6 +17,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{arrows}
+\usepackage{multimedia}
 
 %define a few extra symbols
 \tikzstyle{block}=[draw opacity=0.7,line width=1.4cm]
@@ -57,7 +58,8 @@
 {%
   Holomorphic Hartree--Fock Theory
 }
-\subtitle{The Thom Group: Theory RIG}
+\subtitle{Making everything more complex}
+%\subtitle{How I learned to love \ce{H2} STO-3G}
 
 \author[Burton, Thom]
 {
@@ -103,7 +105,7 @@
  \end{itemize}
 \end{frame} 
 
-\begin{frame}{SCF Solutions to \ce{H2} STO-3G}
+\begin{frame}{SCF Solutions: \ce{H2} STO-3G}
   \begin{center}
     \includegraphics[scale=0.4]{normal_UHF_HH_sto-3g}
   \end{center}
@@ -128,7 +130,7 @@ BUT the number of SCF solutions is \alert{not constant}!!!
 {\tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
 \end{frame}
 
-\begin{frame}{NOCI for \ce{H2} STO--3G}
+\begin{frame}{NOCI: \ce{H2} STO--3G}
   \begin{center}
   \includegraphics[scale=0.4]{H2_normal}
   \end{center}
@@ -143,36 +145,42 @@ BUT the number of SCF solutions is \alert{not constant}!!!
 \end{small}
 Can we apply this to $\frac{dE}{d\bf P}=0$?} 
 \begin{itemize}
-  \item<2->{Must be single-variable polynomial $z$}
-  \item<2->{Must have no dependence on $z^*$, but $E(P_{\mu \nu})$ depends on $C_{\mu i}^*$.}
+  \item<1->{Must be single-variable polynomial $z$}
+  \item<1->{Must have no dependence on $z^*$, but $E(P_{\mu \nu})$ depends on $(C_{\mu i})^*$.}
  \end{itemize}
- \uncover<2->{Remove dependence on $C_{\mu i}^*$ by defining $\tilde{E}=\frac{\braket{\Psi^*}{\hat H}{\Psi}}{\brket{\Psi^*}{\Psi}}$}
-\end{frame}
-
-\begin{frame}{Holomorphic energy functional}
- \uncover<1->{Redefine our energy functional as:
- $$\tilde{E}=\frac{\braket{\Psi^*}{\hat H}{\Psi}}{\brket{\Psi^*}{\Psi}}$$}
-\uncover<2->{ Now a holomorphic function of several complex variables $C_{\mu i}$}.
+ \vspace{1em}
+ \uncover<2->{Remove dependence on $(C_{\mu i})^*$ by defining $\tilde{E}=\frac{\braket{\Psi^*}{\hat H}{\Psi}}{\brket{\Psi^*}{\Psi}}$}
  \begin{itemize}
-  \item<3-> $\tilde{E}$ is now in general complex.
-  \item<4-> Orbitals must be complex--normalised $\sum_{\mu} C_{\mu \cdot} C_{\mu \cdot} = 1.$
-  \item<5-> Density matrix now complex--symmetric $\tilde{P_\mu \nu} = \sum_i^N C_{\mu i} C_{\nu i}$.
+  \item<2->{Density matrix now complex--symmetric $\tilde{P}_{\mu \nu} = \sum_i^N C_{\mu i} C_{\nu i}$.}
+  \item<2->{Orbitals coefficients complex--orthogonal $\sum_{\mu} C_{\mu \cdot} C_{\mu \cdot} = 1.$\\}
  \end{itemize}
- \vfill
- \vspace{2em}
- \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800,(2014)}
+  \vspace{1em}
+   \uncover<2->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.}, {\bf 10}, 4795--4800, (2014)\\ B. Craven, {\it J. Austral. Math. Soc.}, {\bf 10}, 341--354, (1969)}
 \end{frame}
 
-\section{Case Study: HZ STO-3G}
-\begin{frame}{A simple case study: \ce{HZ}\ \ STO--3G}
+\begin{frame}{Holomorphic Hartree--Fock Theory}
+$\hE(\tilde{\mathbf{P}})$ is holomorphic function of several complex variables.
+ \begin{itemize}
+  \item<1-> Should have constant number of stationary points.
+ \end{itemize}
+ \vspace{1em}
+$\hE$ is in general complex.
+ \begin{itemize}
+   \item<1-> Stationary points require $\frac{\mathrm{d} \Re{(\hE})}{\mathrm{d} \tilde{\mathbf{P}}}= 0$ and $\frac{\mathrm{d} \Im{(\hE})}{\mathrm{d} \tilde{\mathbf{P}}} = 0$.
+  \item<1-> All stationary points are saddle--points \textit{via} Cauchy--Riemann.
+ \end{itemize}
+\vspace{1em}
+Holomorphic stationary points can be ``real''--orthogonalised and used for NOCI.
+\end{frame}
+
+\begin{frame}{Holomorphic RHF: \ce{H2} STO-3G}
 \begin{itemize}
- \item<1->{Two electrons in two basis functions (e.g. \ce{H2} - STO-3G).\\ }
- \item<2->{Points on \textit{standard} Grassmannian represented by one parameter:
+ \item<1->{Orthogonal coefficient matrix represented by one complex variable:
  $$ \mathbf{C}(z) = \left(
   \begin{matrix}
   \cos z \\  \sin z
   \end{matrix} \right). $$\\ }
- \item<3->{Extend to $\mathbb{C}-$Orthogonal Grassmannian by taking $z = \theta + i \phi$:\\ 
+ \item<1->{Extend explicitly to $\mathbb{C}-$Orthogonal by taking $z = \theta + i \phi$:\\ 
   $$ \mathbf{C}(\theta, \phi) = \left(
   \begin{matrix}
   \cos \theta \cosh \phi - i \sin \theta \sinh \phi \\  
@@ -181,35 +189,34 @@ Can we apply this to $\frac{dE}{d\bf P}=0$?}
  \end{itemize}
 \end{frame}
 
-\begin{frame}{A simple case study: \ce{HZ}\ \ STO--3G}
-
-
-\end{frame}
-
-\begin{frame}{\ce{H2} STO-3G*}
- \vspace{-1em}
- \begin{center}
-
- \end{center}
- \uncover<1->{\tiny H. G. Hiscock and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 10} 4795--4800, (2014)}
+\begin{frame}{Holomorphic RHF: \ce{H2} STO-3G}
+ \begin{columns}
+   \begin{column}{0.3\textwidth}
+    \includegraphics[scale=0.25]{BFGS_RHF_HH_sto-3g}
+   \end{column}
+   \begin{column}{0.7\textwidth}
+     \begin{center}
+     \hspace{2em}\onslide<1->{\movie{\includegraphics[width=0.9\textwidth]{RHF_HZ_0-00_400_cont.eps}}{R_vary_Z_0-00_cont_animation.mp4}}
+     \end{center} 
+   \end{column}
+ \end{columns}
+ {\tiny $$ \mathbf{C}(\theta, \phi) = \left(
+  \begin{matrix}
+  \cos \theta \cosh \phi - i \sin \theta \sinh \phi \\  
+  \sin \theta \cosh \phi  + i \cos \theta \sinh \phi
+  \end{matrix} \right). $$}
 \end{frame} 
 
-\begin{frame}{\ce{H2} 6-31G*}
+\begin{frame}{h--UHF NOCI: \ce{H2} STO-3G}
  \vspace{-1em}
  \begin{center}
-
+  \includegraphics[scale=0.4]{H2_STO-3G}
  \end{center}
  \uncover<1->{\tiny H. G. A. Burton and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 12} 167--173, (2016)}
 \end{frame} 
 
-
-
-
-
-
-
 \section{Geometric Approach:}
-\subsection{Geometric description of Hartree--Fock}
+\subsection{Geometric description of SCF}
 \begin{frame}{A Geometric Approach: ``Standard'' Hartree--Fock}
 \uncover<1->{Optimal set of orbitals given by 
 $\psi_i(\mathbf{r})=\sum_\mu^n\eta_\mu(\mathbf{r}) C_{\mu i}.$  }
@@ -291,7 +298,7 @@ $$\mathbf{C}_{k+1} = \mathbf{C}(t_{min}).$$}
 \item<1->{How do we compute $\mathbf{y}_k = \mathbf{g}_{k+1} - \mathbf{g}_{k}$?}
 \item<1->{$\mathbf{g}_{k}$ and $\mathbf{g}_{k+1}$ must be evaluated at \alert{same point}.} 
 
-\item<2->{Transport matrix defined as:
+\item<2->{Parallel transport matrix defined as:
 $$T(t) = \left[\mathbf{C} \mathbf{V}\ \ \mathbf{V} \right] \left[
  \begin{matrix}
  -\sin(\mathbf{\Sigma} t)\\
@@ -304,32 +311,56 @@ $$T(t) = \left[\mathbf{C} \mathbf{V}\ \ \mathbf{V} \right] \left[
 \end{frame}
 
 \begin{frame}{Constrained BFGS}
+
 6. Update approximate inverse Hessian...
 \begin{itemize}
 \item<1->{Must also parralel transport $B_{k}$:
 $$\tau \mathbf{B}_k = (\mathbf{I} \otimes T(t_{min}))\ \mathbf{B}_k \ (\mathbf{I} \otimes T(t_{min})^{-1})$$}
 \item<1->{Can now compute updated inverse Hessian:
-$$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \mathbf{s}_k} \right ) \tau \mathbf{B}_{k} \left (\mathbf{I}-\frac { \mathbf{y}_k \mathbf{s}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \mathbf{s}_k} \right )+\frac
-{\mathbf{s}_k \mathbf{s}_k^{\dagger}} {\mathbf{y}_k^{\dagger} \, \mathbf{s}_k}.$$}
+$$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{T}} {\mathbf{y}_k^{T} \mathbf{s}_k} \right ) \tau \mathbf{B}_{k} \left (\mathbf{I}-\frac { \mathbf{y}_k \mathbf{s}_k^{T}} {\mathbf{y}_k^{T} \mathbf{s}_k} \right )+\frac
+{\mathbf{s}_k \mathbf{s}_k^{T}} {\mathbf{y}_k^{T} \, \mathbf{s}_k}.$$}
  \end{itemize}
  \vspace{2em}
  \uncover<1->{\tiny B. Savas and L. Lim, {\it SIAM J. Sci. Comput.}, {\bf 32}, 3352--3393, (2010)}
 
 \end{frame}
+\subsection{Some Results}
+\begin{frame}{Holomorphic UHF: \ce{H2} 3-21G}
+\vspace{-0.9em}
+  \begin{center}
+    \includegraphics[scale=0.45]{BFGS_UHF_HH_3-21g}
+  \end{center}
+\end{frame}
 
-\section{Slippery Issues}
-\begin{frame}{Future Directions}
+\begin{frame}{Holomorphic RHF: \ce{HZ}\ STO-3G}
+\vspace{-0.9em}
+  \begin{center}
+    \includegraphics[scale=0.45]{BFGS_RHF_HZ_0-20_sto-3g}
+  \end{center}
+\end{frame}
+
+\section{Future Directions}
+\begin{frame}{A number of questions...}
  \begin{itemize}
-  \item<1->{Currently working to apply geometric optimisation methods on holomorphic energy surface.}
-  \item<2->{Hope to understand holomorphic states and the topology of the energy functional.}
-  \item<3->{Will investigate the applicability of using NOCI for studying larger molecules.}
-  \item<4->{Consider using holomorphic states for other post-HF correlation methods.}
+  \item{Don't have a true metric for $\mathbb{C}$-orthogonal matrices.}
+  \item{How can we systematically move through Coulson--Fischer point?}
+  \item{Why does the Coulson--Fischer point exist?}
+  \item{Does the Fundamental Theorem of Algebra extend to several complex variables?}
+  \item{What do holomorphaic states correspond to?}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{Where to go from here?}
+ \begin{itemize}
+   \item{Find way to move through Coulson--Fischer point.}
+   \item{Get geometric methods working \alert{reliably} for larger molecules.}
+   \item{Use holo-UHF states for NOCI on larger molecules.}
+   \item{Develop more fundamental mathematical basis for theory.}
  \end{itemize}
 \end{frame}
 
 \begin{frame}{Acknowledgements}
  I would like to thank:
- 
  \begin{itemize}
   \item{Alex Thom}
   \item{The Thom Group}
@@ -339,4 +370,5 @@ $$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{\dagg
   \includegraphics[scale=0.7]{template/CT_logo.jpg}
  \end{center}
 \end{frame}
+
 \end{document}
