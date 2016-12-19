@@ -113,6 +113,7 @@
 
 \subsection{NOCI}
 \begin{frame}{Non--Orthogonal CI}
+
 SCF states are size--extensive and could be a basis for CI methods:
 \vspace{1em}
  \begin{itemize}
@@ -126,14 +127,18 @@ SCF states are size--extensive and could be a basis for CI methods:
    \begin{center} 
 BUT the number of SCF solutions is \alert{not constant}!!!
   \end{center}
+
 \vspace{0.5em} 
 {\tiny A. J. W. Thom and M. Head-Gordon, {\it J. Chem. Phys.} {\bf 131} 124113-1--5, (2009)}
 \end{frame}
 
 \begin{frame}{NOCI: \ce{H2} STO--3G}
+\vspace{-1em}
   \begin{center}
   \includegraphics[scale=0.4]{H2_normal}
   \end{center}
+  \vspace{-1em}
+   \uncover<1->{\tiny H. G. A. Burton and A. J. W. Thom, {\it J. Chem. Theory Comput.} {\bf 12} 167--173, (2016)}
 \end{frame}
 
 \subsection{Holomorphic HF}
@@ -325,6 +330,20 @@ $$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{T}} {
 
 \end{frame}
 \subsection{Some Results}
+\begin{frame}{Holomorphic UHF: \ce{H2} STO-3G}
+\vspace{-0.9em}
+  \begin{center}
+    \includegraphics[scale=0.45]{BFGS_UHF_HH_sto-3g}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Holomorphic RHF: \ce{HZ}\ STO-3G}
+\vspace{-0.9em}
+  \begin{center}
+    \includegraphics[scale=0.45]{BFGS_UHF_HZ_0-20_sto-3g}
+  \end{center}
+\end{frame}
+
 \begin{frame}{Holomorphic UHF: \ce{H2} 3-21G}
 \vspace{-0.9em}
   \begin{center}
@@ -339,12 +358,13 @@ $$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{T}} {
   \end{center}
 \end{frame}
 
-\begin{frame}{Holomorphic RHF: \ce{HZ}\ STO-3G}
+\begin{frame}{Holomorphic UHF: \ce{H4} STO-3G}
 \vspace{-0.9em}
   \begin{center}
-    \includegraphics[scale=0.45]{BFGS_RHF_HZ_0-20_sto-3g}
+    \includegraphics[scale=0.45]{BFGS_UHF_H4_rect_sto-3g}
   \end{center}
 \end{frame}
+
 
 \section{Future Directions}
 \begin{frame}{A number of questions...}
@@ -355,6 +375,24 @@ $$\mathbf{B}_{k+1} =  \left (\mathbf{I}-\frac { \mathbf{s}_k \mathbf{y}_k^{T}} {
   \item{Does the Fundamental Theorem of Algebra extend to several complex variables?}
   \item{What do holomorphaic states correspond to?}
  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bezout's Theorem}
+\begin{quote}
+``Take n homogeneous polynomials in n+1 variables of degree $d_1, d_2 ... d_n$ that define $n$ hypersurfaces, if the number of intersections is finite then this number is $d_1 d_2 ... d_n$.''
+\end{quote}
+e.g. Two parrallel lines:\\
+\begin{center}
+$3x + 5y = 7$ and $3x + 5y = 12$.
+\end{center}
+Convert to homogeneous coordinates...
+\begin{center}
+$3x + 5y = 7z$ and $3x + 5y = 12z$.
+\end{center}
+\begin{itemize}
+\item Can parameterise in terms of $OV$ rotations, e.g. $\hE(\theta, \phi)$.
+\item Solutions correspond to $\frac{\partial\tilde{E}}{\partial \theta} = 0$ and $\frac{\partial\tilde{E}}{\partial \phi} = 0$.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Where to go from here?}
