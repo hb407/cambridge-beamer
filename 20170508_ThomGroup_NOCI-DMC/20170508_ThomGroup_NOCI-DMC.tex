@@ -1,0 +1,314 @@
+\documentclass{beamer}
+
+\usetheme{cambridge}
+
+% Standard packages
+
+\usepackage[english]{babel}
+\usepackage[version=4]{mhchem}
+
+%\usepackage{times}
+%\usepackage[T1]{fontenc}
+
+%\usepackage{fontspec}
+%\setsansfont{Myriad Pro}
+%\usefonttheme{professionalfonts}
+
+% Setup TikZ
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{multimedia}
+
+%define a few extra symbols
+\tikzstyle{block}=[draw opacity=0.7,line width=1.4cm]
+\def \hatH {{\skew4\hat{H}}}
+\def \hatA {{\skew6\hat{\cal A}}}
+\newcommand{\ah}[2] {\skew2\hat{a}_{\vphantom{b}#1}^{#2}}
+\newcommand{\ab}[1] {\skew2\hat{a}_{\vphantom{b}\bf #1}}
+\def\hatT{\skew3\hat{T}}
+\def\hatC {\skew4\hat{C}}
+\def \degrees {$^\circ$}
+% These are for non-serif fonts
+%\def \hatH {{\skew5\hat{H}}}
+%\def \hatA {{\skew5\hat{\cal A}}}
+%\newcommand{\ah}[2] {\skew3\hat{a}_{#1}^{#2}}
+%\newcommand{\ab}[1] {\skew3\hat{a}_{\bf #1}}
+%\def\hatT{\skew4\hat{T}}
+\newcommand{\dbd}[2] {{\frac{\partial #1}{\partial #2}}}
+\newcommand{\braket}[3] {{\langle #1 | #2 | #3 \rangle}}
+\newcommand{\brakett}[3] {{\{ #1 | #2 | #3 \}}}
+\newcommand{\brket}[2] {{\langle #1 | #2  \rangle}}
+\newcommand{\brkett}[2] {{\{ #1 | #2  \}}}
+\newcommand{\bket}[1] {{\langle #1  \rangle}}
+\newcommand{\D}[1] {D_{\bf #1}}
+\newcommand{\ket}[1] {{| #1 \rangle}}
+\newcommand{\kD}[1] {\ket{\D{#1}}}
+\def\kDz{\ket{D_0}}
+\def\bfr{{\bf r}}
+\newcommand{\Or}[1] {${\cal O}$[#1]}
+\def\PsiCC{\Psi_{\rm CC}}
+\def\PsiCI{\Psi_{\rm CI}}
+\newcommand{\up}[2] {{^{#1}\!#2}}
+\def\hE{\tilde{E}}
+\newcommand{\II}{\mathrm{i}}
+
+% Author, Title, etc.
+
+\title[MainTitle]
+{%
+  NOCI Trial Wavefunctions for Diffusion Monte Carlo
+}
+\subtitle{Because combining acronyms makes better methods}
+%\subtitle{Any opportunity to combine acronyms}
+%\subtitle{How I learned to love \ce{H2} STO-3G}
+
+\author
+{
+  \hskip-1.7mm
+  Hugh~Burton %\and
+}
+
+\institute[Burton and others]
+{
+%  \inst{1}%
+  University of Cambridge
+%  \and
+%  \vskip-2mm
+%  \inst{2}%
+%  Bar-Ilan University, Ramat-Gan, Israel
+}
+
+\date{Monday 8th May 2017}
+
+% The main document
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%\begin{frame}{Outline}
+% \tableofcontents
+%\end{frame}
+
+\section{Review of DMC}
+
+\begin{frame}{Review of Diffusion Monte Carlo}
+  Time-dependent Schr\"{o}dinger equation (TDSE) is given by
+  \small{\begin{align}
+    \label{TDSE}
+    \II \hbar \frac{\partial}{\partial t} \Psi (\mathbf{r}, t) = \hat{H} \Psi (\mathbf{r}, t).
+  \end{align}}%
+  We recast TDSE in imaginary time, $\tau = \II t$, and apply an energy offset $E_T$
+  \small{\begin{align}
+  \label{ITDSE}
+    - \hbar \frac{\partial}{\partial \tau} \Psi (\mathbf{r}, \tau) = (\hat{H} - E_T) \Psi (\mathbf{r}, \tau).
+  \end{align}}%
+  In integral form this can be expressed as
+  \small{\begin{align}
+    \label{integralITDSE}
+    \Psi(\mathbf{r},\tau+\delta \tau) =  \sum_k \Psi_k(\mathbf{r}) \mathrm{e}^{-\delta \tau(E_k - E_T)} \langle \Psi_k^* | \Psi_{init} \rangle.
+  \end{align}}%
+ In the long time limit, Equation \ref{integralITDSE} projects out lowest eigenstate.
+ By adjusting $E_T$, a stable simulation can be reached where $E_T = E_0$. \\
+ \vspace{1em}
+ \tiny{W. M. C. Foulkes, L. Mitas, R. J. Needs and G. Rajagopal, \textit{Rev. Mod. Phys}, \textbf{73}, 33--83, (2001)
+ }%
+\end{frame}
+
+\begin{frame}{Review of Diffusion Monte Carlo}
+  Wavefunction is represented by a series of walkers that are propagated through imaginary time with importance sampling using a guide wavefunction  $\Psi_T(\mathbf{r})$.
+  \begin{enumerate}
+    \item{\textbf{Diffusion:} 
+      \begin{itemize}
+      \item Each electron is propagated to a new position $\mathbf{r} = \mathbf{r}' + \chi + \tau \mathbf{v}_D(\mathbf{r}')$ where $\mathbf{v}_D(\mathbf{r}')$ is the drift velocity 
+    \small{\begin{align}
+      \label{DriftVelocity}
+      \mathbf{v}_D(\mathbf{r}') = \Psi_T(\mathbf{r}')^{-1} \nabla \Psi_T(\mathbf{r}').
+    \end{align}}%
+    \item Step is accepted using fixed node approximation and with probability 
+     \small{\begin{align}
+     \label{Paccept}
+        \exp \left[ \frac{-\left| \mathbf{r}'-\mathbf{r} - \delta \tau \mathbf{v}_D (\mathbf{r}) \right| ^2}{2 \delta \tau} \right] \left| \frac{\Psi_T(\mathbf{r})}{\Psi_T(\mathbf{r}')} \right| ^2.
+     \end{align}}%
+     \end{itemize}}%
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Review of Diffusion Monte Carlo}
+  \begin{enumerate}
+  \setcounter{enumi}{1}
+    \item \textbf{Reweighting:} 
+      \begin{itemize}
+      \item For each diffusion step, walker weight is multiplied by
+    \small{\begin{align}
+    \label{ReweightWalker}
+ \exp \left[ -\delta \tau \left( \frac{ E_{loc}(\mathbf{r}) + E_{loc}(\mathbf{r}') }{2} - E_T \right) \right], 
+    \end{align}}%
+    where $E_{loc}$ is the local energy given by $ E_{loc}(\mathbf{r}) = \Psi_T (\mathbf{r})^{-1} \hat H \Psi_T (\mathbf{r})$.%
+     \end{itemize}
+     \item{\textbf{Branching:}
+     \begin{itemize}
+       \item Walkers with low weights below a certain threshold are killed, whilst those above a certain threshold are copied.
+     \end{itemize}
+     }
+  \item \textbf{Sampling:} 
+   \begin{itemize}
+       \item Energy is sampled from weighted sum of individual walker local energies.
+       \small{\begin{align}
+       \label{LocalEnergySampling}
+ E_{D} \approx \frac{1}{M} \sum_M E_L (\mathbf{r}_M).
+    \end{align}}%
+     \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{So what's the problem?}
+  \begin{itemize}
+    \item Quality of trial wavefunction controls statistical efficiency and limits final accuracy of simulation.
+    \item Fixed node approximation yields lowest energy for a given nodal surface.
+    \item \textbf{Only} when the nodal surface is exactly correct can this give the exact answer.
+  \end{itemize}
+\end{frame}
+\begin{frame}{Could NOCI provide improved trial wavefunctions?}
+  \vspace{-0.8em}
+  \begin{center}
+    \includegraphics[scale=0.45]{BFGS_h-RHF_HLi_STO-3G}
+  \end{center}
+
+\end{frame}
+\begin{frame}{Could NOCI provide improved trial wavefunctions?}
+  NOCI states are constructed from a linear combination of determinants containing holomorphic HF solutions.
+\vspace{1em}  
+  \begin{itemize}
+   \item Wavefunction is constructed from multiple determinants, each based on a different set of molecular orbitals.
+   \item Wavefunction is complex valued in general.
+  \end{itemize}
+  \vspace{1em}  
+  Exploiting NOCI trial wavefunctions requires a \alert{multi-determinantal} method and the \alert{fixed phase} approximation.
+\end{frame}
+
+\section{Multi-Determinantal DMC}
+\begin{frame}{Using a multi-determinantal trial wavefunction}
+  Trial wavefunction is given by
+    \small{\begin{align}
+    \Psi_T = \sum_k^{n_{dets}} a_k \mathrm{det} M^{\uparrow k} \mathrm{det} M^{\downarrow k}.
+  \end{align}}
+ \hspace{-0.27em}For most of the DMC algorithm we just loop over each reference determinant, but we must be careful when computing $\nabla \Psi_T$ and $\nabla^2 \Psi_T$...
+  \small{\begin{align}
+     \frac{\nabla_{\mathbf{r}_i} \Psi_T}{\Psi_T} = \frac{ \sum_k^{n_{dets}} a_k \left[ \nabla_{\mathbf{r}_i}  \mathrm{det} M^{\uparrow k} \right] \mathrm{det} M^{\downarrow k}}{ \sum_k^{n_{dets}} a_k \mathrm{det} M^{\uparrow k} \mathrm{det} M^{\downarrow k}}
+  \end{align}}
+  In the standard case ($n_{dets} = 1$) this reduces to 
+  \small{\begin{align}
+     \frac{\nabla_{\mathbf{r}_i} \Psi_T}{\Psi_T} = \frac{\nabla_{\mathbf{r}_i}   \mathrm{det} M^{\uparrow}}{  \mathrm{det} M^{\uparrow}} = \sum_{\mu} \left[ \nabla_{\mathbf{r}_i} M^{\uparrow}_{i \mu}(\mathbf{r}) \right]  M^{\uparrow}(\mathbf{r})^{-1}_{\mu i}.
+  \end{align}}
+
+  
+\end{frame}
+
+
+\section{Fixed Phase DMC}
+  \begin{frame}{Introducing the fixed-phase approximation}
+    \begin{itemize}
+     \item Take wavefunction as a combination of amplitude and phase
+     \small{
+      \begin{align}
+\Psi \left(\mathbf{r} , \tau \right) = \rho \left( \mathbf{r} , \tau \right) \exp \left[ \II \Phi \left( \mathbf{r} , \tau \right) \right]. 
+      \end{align}
+      }
+      \item Substituting into imaginary time Schr\"{o}dinger equation gives two coupled differential equations
+      \small{
+      \begin{align}
+        \label{FPDMCr}
+        - \frac{\partial \rho \left(\mathbf{r} , \tau \right)}{\partial \tau} &= \left[ -\frac{1}{2} \nabla^2 + V(\mathbf{r}) + \frac{1}{2} | \nabla \Phi \left(\mathbf{r} , \tau \right) |^2 \right] \rho \left(\mathbf{r} , \tau \right) \\
+        \label{FPDMCi}
+        - \frac{\partial \Phi \left(\mathbf{r} , \tau \right)}{\partial \tau} &= \left[ -\frac{1}{2} \nabla^2 + V(\mathbf{r})  + \frac{\nabla \rho \left(\mathbf{r} , \tau \right) \cdot \nabla }{\rho \left(\mathbf{r} , \tau \right)}  \right] \Phi \left(\mathbf{r} , \tau \right).
+      \end{align}
+      }
+      \item Fixed phase approximation sets $\frac{\partial \Phi \left(\mathbf{r} , \tau \right)}{\partial \tau} = 0$, giving $\Phi(\mathbf{r},\tau) = \Phi_{T}(\mathbf{r})$.
+     % \item Amplitude $\rho(\mathbf{r},\tau)$ is positive everywhere so method reduces to solving bosonic problem of Equation \ref{FPDMCr}.
+    \end{itemize}
+     \vspace{1em}
+     \tiny{G. Oritz, D. M Ceperley and R. M. Martin, \textit{Phys. Rev. Lett.}, \textbf{71}, 2777, (1993)\\
+     C. A. Melton, M. Chandler Bennett and L. Mitas, \textit{J. Chem. Phys.}, \textbf{144}, 244113, (2016)
+ }%
+  \end{frame}
+  
+  \begin{frame}{Implementing FPDMC}
+    FPDMC proceeds in same manner as FNDMC with a few modifications:
+    \begin{itemize}
+      \item{ Drift velocity calculated from trial amplitude $\rho_T(\mathbf{r})$
+                \small{\begin{align}
+                  \label{DriftVelocityFPDMC}
+                  \mathbf{v}_{D}(\mathbf{r}) = \rho_T^{-1} \mathbf{\nabla} \rho_T(\mathbf{r}).
+                \end{align}
+               }}
+      \item{Local energy includes phase dependent repulsive term
+                \small{\begin{align}
+                  \label{LocalEnergyFPDMC}
+                E_{L}(\mathbf{r}) =  \rho_T^{-1}(\mathbf{r}) \left[ -\frac{1}{2} \nabla^2 + V(\mathbf{r})  + \frac{1}{2} | \mathbf{\nabla} \Phi \left(\mathbf{r} \right) |^2 \right] \rho \left(\mathbf{r}  \right).
+               \end{align}
+               }}
+     \end{itemize}
+     Straightforward expressions for Equations \ref{DriftVelocityFPDMC} and \ref{LocalEnergyFPDMC} can be derived from $\nabla \Psi_T$ and $\nabla^2 \Psi_T$:
+     \begin{center}
+               \vspace{-1.em}
+               \small{\begin{align}
+                  \rho_T^{-1} \mathbf{\nabla} \rho_T(\mathbf{r}) &= \Re\left( \Psi_T^* \mathbf{\nabla} \Psi_T \right) / \rho_T^2, \\
+                   E_{L}(\mathbf{r}) &= - \frac{1}{2}\Re\left( \Psi_T^* \nabla^2 \Psi_T \right) / \rho_T^2 + V(\mathbf{r}).
+                \end{align}}
+     \end{center}
+  \end{frame}
+  
+  \begin{frame}{Fixed-node as a special case of fixed-phase}
+  Construct a complex trial function from real and imaginary part
+  \begin{align}
+    \Psi_T = \Psi_{R} + \mathrm{i} \epsilon \Psi_{B}
+  \end{align}
+  Potential generate by phase of $\Phi_T (\mathbf{r})$ is 
+  \begin{align}
+    V_{ph} = \frac{1}{2} \left| \frac{\epsilon \left( \Psi_R \nabla \Psi_B - \Psi_B \nabla \Psi_R \right)}{\Psi_R^2 + \epsilon^2 \Psi_B^2} \right|^2.
+  \end{align}
+  \begin{itemize}
+  \item Away from nodal surface ($\Psi_R \neq 0$), limit $\epsilon \rightarrow 0$ yields $V_{ph} =0$.
+  \item At the nodal surface ($\Psi_R = 0$), generally $\left| \nabla \Psi_R \right|^2 \geq 0$ so limit $\epsilon \rightarrow 0$ yields $V_{ph} = \infty$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Putting it all together}
+  Combining multi-determinantal DMC and FPDMC should require minimal alterations to the DMC algorithm.\\
+  \begin{itemize}
+    \item Implement multi-determinantal algorithm and test for real wavefunctions.
+    \item Back compatibility achieved by setting $n_{det} = 1$.
+    \item Code up the FPDMC and test using NOCI states constructed from holomorphic solutions.
+  \end{itemize}
+  Method is being written into the group \texttt{simpleDMC} code.
+\end{frame}
+
+\begin{frame}{Questions to investigate}
+  Beyond implementation, the interesting technical questions include
+  \begin{itemize}
+    \item Do NOCI trial functions give more efficient convergence?
+    \item If an excited NOCI state is used, do we converge onto the related FCI state?
+    \item What result would we obtain for `dormant' holomorphic solutions that are complex everywhere?
+  \end{itemize}
+  Using the new framework we will hopefully be able to use NOCI trial wavefunctions for wider applications!
+\end{frame}
+
+
+
+%\begin{frame}{Acknowledgements}
+% I would like to thank:
+% \begin{itemize}
+%  \item{Alex Thom}
+% \item{The Thom Group}
+% \item{The Cambridge Trust}
+% \end{itemize}
+% \begin{center}
+%  \includegraphics[scale=0.7]{../template/CT_logo.jpg}
+% \end{center}
+%\end{frame}
+
+\end{document}
