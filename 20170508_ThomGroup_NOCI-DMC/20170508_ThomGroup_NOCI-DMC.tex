@@ -59,9 +59,7 @@
 {%
   NOCI Trial Wavefunctions for Diffusion Monte Carlo
 }
-\subtitle{Because combining acronyms makes better methods}
-%\subtitle{Any opportunity to combine acronyms}
-%\subtitle{How I learned to love \ce{H2} STO-3G}
+\subtitle{$\because$ longer acronyms $\Rightarrow$ better methods}
 
 \author
 {
@@ -109,7 +107,7 @@
   In integral form this can be expressed as
   \small{\begin{align}
     \label{integralITDSE}
-    \Psi(\mathbf{r},\tau+\delta \tau) =  \sum_k \Psi_k(\mathbf{r}) \mathrm{e}^{-\delta \tau(E_k - E_T)} \langle \Psi_k^* | \Psi_{init} \rangle.
+    \Psi(\mathbf{r},\tau+\delta \tau) =  \sum_k \Psi_k(\mathbf{r}) \mathrm{e}^{-\delta \tau(E_k - E_T)} \langle \Psi_k | \Psi_{init} \rangle.
   \end{align}}%
  In the long time limit, Equation \ref{integralITDSE} projects out lowest eigenstate.
  By adjusting $E_T$, a stable simulation can be reached where $E_T = E_0$. \\
@@ -156,7 +154,7 @@
      }
   \item \textbf{Sampling:} 
    \begin{itemize}
-       \item Energy is sampled from weighted sum of individual walker local energies.
+       \item Energy is sampled from weighted sum of individual walker local energies
        \small{\begin{align}
        \label{LocalEnergySampling}
  E_{D} \approx \frac{1}{M} \sum_M E_L (\mathbf{r}_M).
@@ -187,7 +185,7 @@
    \item Wavefunction is complex valued in general.
   \end{itemize}
   \vspace{1em}  
-  Exploiting NOCI trial wavefunctions requires a \alert{multi-determinantal} method and the \alert{fixed phase} approximation.
+  Exploiting NOCI trial wavefunctions requires a \alert{multi-determinantal} method and the \alert{fixed phase approximation}.
 \end{frame}
 
 \section{Multi-Determinantal DMC}
@@ -232,7 +230,7 @@
     \end{itemize}
      \vspace{1em}
      \tiny{G. Oritz, D. M Ceperley and R. M. Martin, \textit{Phys. Rev. Lett.}, \textbf{71}, 2777, (1993)\\
-     C. A. Melton, M. Chandler Bennett and L. Mitas, \textit{J. Chem. Phys.}, \textbf{144}, 244113, (2016)
+     C. A. Melton, M. C. Bennett and L. Mitas, \textit{J. Chem. Phys.}, \textbf{144}, 244113, (2016)
  }%
   \end{frame}
   
@@ -248,15 +246,15 @@
       \item{Local energy includes phase dependent repulsive term
                 \small{\begin{align}
                   \label{LocalEnergyFPDMC}
-                E_{L}(\mathbf{r}) =  \rho_T^{-1}(\mathbf{r}) \left[ -\frac{1}{2} \nabla^2 + V(\mathbf{r})  + \frac{1}{2} | \mathbf{\nabla} \Phi \left(\mathbf{r} \right) |^2 \right] \rho \left(\mathbf{r}  \right).
+                E_{L}(\mathbf{r}) =  \rho_T^{-1}(\mathbf{r}) \left[ -\frac{1}{2} \nabla^2 + V(\mathbf{r})  + \frac{1}{2} | \mathbf{\nabla} \Phi_T \left(\mathbf{r} \right) |^2 \right] \rho_T \left(\mathbf{r}  \right).
                \end{align}
                }}
      \end{itemize}
-     Straightforward expressions for Equations \ref{DriftVelocityFPDMC} and \ref{LocalEnergyFPDMC} can be derived from $\nabla \Psi_T$ and $\nabla^2 \Psi_T$:
+     Straightforward expressions for Equations \ref{DriftVelocityFPDMC} and \ref{LocalEnergyFPDMC} can be derived from $\nabla \Psi_T$ and $\nabla^2 \Psi_T$
      \begin{center}
                \vspace{-1.em}
                \small{\begin{align}
-                  \rho_T^{-1} \mathbf{\nabla} \rho_T(\mathbf{r}) &= \Re\left( \Psi_T^* \mathbf{\nabla} \Psi_T \right) / \rho_T^2, \\
+                  \rho_T^{-1}(\mathbf{r}) \mathbf{\nabla} \rho_T(\mathbf{r}) &= \Re\left( \Psi_T^* \mathbf{\nabla} \Psi_T \right) / \rho_T^2, \\
                    E_{L}(\mathbf{r}) &= - \frac{1}{2}\Re\left( \Psi_T^* \nabla^2 \Psi_T \right) / \rho_T^2 + V(\mathbf{r}).
                 \end{align}}
      \end{center}
@@ -282,6 +280,7 @@
   \begin{itemize}
     \item Implement multi-determinantal algorithm and test for real wavefunctions.
     \item Back compatibility achieved by setting $n_{det} = 1$.
+    \item Independent of Jastrow factor implementation.
     \item Code up the FPDMC and test using NOCI states constructed from holomorphic solutions.
   \end{itemize}
   Method is being written into the group \texttt{simpleDMC} code.
